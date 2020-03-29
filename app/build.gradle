@@ -61,8 +61,6 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-extensions:$lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
-    implementation "androidx.room:room-runtime:$roomVersion"
-    kapt "androidx.room:room-compiler:$roomVersion"
     testImplementation "androidx.arch.core:core-testing:$archCompomentVersion"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion"
 
@@ -91,6 +89,9 @@ dependencies {
 
     // adapter
     implementation "com.github.skydoves:baserecyclerviewadapter:$baseAdapterVersion"
+
+    // constraintLayout
+    implementation("androidx.constraintlayout:constraintlayout:1.1.3")
 
     // debugging
     implementation "com.jakewharton.timber:timber:$timberVersion"

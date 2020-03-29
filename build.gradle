@@ -39,7 +39,7 @@ buildscript {
         gsonVersion = '2.8.5'
 
         // glide
-        glideVersion = '4.9.0'
+        glideVersion = '4.10.0'
         glidePaletteVersion = '2.1.2'
 
         // whatIf
