@@ -8,5 +8,5 @@ import retrofit2.http.Query
 interface RatesService {
 
     @GET("api/android/latest")
-    fun fetchLatestRates(@Query("base") baseCurrency: String): Call<RatesListResponse>
+    fun getLatestRates(@Query("base") baseCurrency: String): Call<RatesListResponse>
 }

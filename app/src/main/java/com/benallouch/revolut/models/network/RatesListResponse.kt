@@ -4,5 +4,5 @@ import com.benallouch.revolut.models.entity.Rate
 
 data class RatesListResponse(
     val baseCurrency: String,
-    val rates: List<Rate>
+    val rates: Map<String, Double>
 )

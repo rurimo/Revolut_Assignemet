@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.benallouch.revolut.api.ApiResponse
 import com.benallouch.revolut.api.client.RatesClient
 import com.benallouch.revolut.api.message
+import com.benallouch.revolut.extension.toRatesList
 import com.benallouch.revolut.models.entity.Rate
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -18,12 +19,13 @@ class RatesRepository constructor(private val ratesClient: RatesClient) {
     suspend fun loadRates(baseCurrency: String, error: (String) -> Unit) =
         withContext(Dispatchers.IO) {
             val liveData = MutableLiveData<List<Rate>>()
-            var rates = listOf<Rate>()
+            var rates = arrayListOf<Rate>()
             ratesClient.getLatestRates(baseCurrency) { response ->
                 when (response) {
                     is ApiResponse.Success -> {
                         response.data?.let { data ->
-                            rates = data.rates
+                            rates.add(Rate(baseCurrency, 1.0))
+                            rates.addAll(data.rates.toRatesList() as ArrayList<Rate>)
                             liveData.postValue(rates)
                         }
                     }
@@ -34,4 +36,6 @@ class RatesRepository constructor(private val ratesClient: RatesClient) {
             liveData.apply { postValue(rates) }
 
         }
+
+
 }
