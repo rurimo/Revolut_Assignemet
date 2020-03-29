@@ -1,4 +1,4 @@
-package com.benallouch.revolut.view.ui
+package com.benallouch.revolut.view.ui.rates
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -8,7 +8,7 @@ import com.benallouch.revolut.models.entity.Rate
 import com.benallouch.revolut.repository.RatesRepository
 import timber.log.Timber
 
-class RatesActivityViewModel constructor(private val ratesRepository: RatesRepository) :
+class RatesFragmentViewModel constructor(private val ratesRepository: RatesRepository) :
     DispatchViewModel() {
 
     private val baseCurrencyLiveData: MutableLiveData<String> = MutableLiveData()

@@ -10,6 +10,6 @@ class RatesClient(private val ratesService: RatesService) {
         query: String,
         onResult: (response: ApiResponse<RatesListResponse>) -> Unit
     ) {
-        this.ratesService.fetchLatestRates(query).async(onResult)
+        this.ratesService.getLatestRates(query).async(onResult)
     }
 }
