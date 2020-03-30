@@ -37,5 +37,4 @@ class RatesRepository constructor(private val ratesClient: RatesClient) {
 
         }
 
-
 }

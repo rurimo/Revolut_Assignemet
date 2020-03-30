@@ -14,3 +14,4 @@ fun Map<String, Double>.toRatesList(): List<Rate> {
     }
 }
 
+
