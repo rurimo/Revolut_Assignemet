@@ -7,5 +7,7 @@ import com.benallouch.revolut.view.adapter.RatesAdapter
 
 @BindingAdapter("adapterRates")
 fun bindAdapterRatesList(view: RecyclerView, rates: List<Rate>?) {
-    rates?.let { (view.adapter as? RatesAdapter)?.addRates(it) }
+    if (!rates.isNullOrEmpty()) {
+        (view.adapter as RatesAdapter).addRates(rates)
+    }
 }

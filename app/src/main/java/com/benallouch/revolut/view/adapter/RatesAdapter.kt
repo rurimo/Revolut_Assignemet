@@ -21,7 +21,7 @@ class RatesAdapter : BaseAdapter() {
         val section = sections()[0]
         section.clear()
         section.addAll(rates)
-        notifyItemRangeChanged(0, rates.size)
+        notifyItemRangeChanged(0, section.size)
     }
 
 }
