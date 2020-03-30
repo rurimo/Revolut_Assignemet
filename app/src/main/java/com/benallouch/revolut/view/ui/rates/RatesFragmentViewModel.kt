@@ -6,7 +6,9 @@ import androidx.lifecycle.switchMap
 import com.benallouch.revolut.dispatcher.DispatchViewModel
 import com.benallouch.revolut.models.entity.Rate
 import com.benallouch.revolut.repository.RatesRepository
+import kotlinx.coroutines.channels.ticker
 import timber.log.Timber
+import kotlin.coroutines.CoroutineContext
 
 class RatesFragmentViewModel constructor(private val ratesRepository: RatesRepository) :
     DispatchViewModel() {
@@ -21,7 +23,7 @@ class RatesFragmentViewModel constructor(private val ratesRepository: RatesRepos
 
         this.ratesListLiveData = baseCurrencyLiveData.switchMap { baseCurrency ->
             launchOnViewModelScope {
-                ratesRepository.loadRates(baseCurrency) { toastLiveData.postValue(it) }
+               ratesRepository.loadRates(baseCurrency) { toastLiveData.postValue(it) }
             }
         }
     }

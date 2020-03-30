@@ -6,6 +6,6 @@ import com.benallouch.revolut.models.entity.Rate
 import com.benallouch.revolut.view.adapter.RatesAdapter
 
 @BindingAdapter("adapterRates")
-fun bindAdapterPersonList(view: RecyclerView, rates: List<Rate>?) {
+fun bindAdapterRatesList(view: RecyclerView, rates: List<Rate>?) {
     rates?.let { (view.adapter as? RatesAdapter)?.addRates(it) }
 }

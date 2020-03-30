@@ -19,9 +19,9 @@ class RatesAdapter : BaseAdapter() {
 
     fun addRates(rates: List<Rate>) {
         val section = sections()[0]
+        section.clear()
         section.addAll(rates)
-        notifyItemRangeInserted(section.size + 1, section.size + rates.size)
+        notifyItemRangeChanged(0, rates.size)
     }
-
 
 }
