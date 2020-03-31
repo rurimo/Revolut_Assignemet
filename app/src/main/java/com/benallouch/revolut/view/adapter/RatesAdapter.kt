@@ -3,11 +3,12 @@ package com.benallouch.revolut.view.adapter
 import android.view.View
 import com.benallouch.revolut.R
 import com.benallouch.revolut.models.entity.Rate
+import com.benallouch.revolut.view.ui.rates.RatesEventsListener
 import com.benallouch.revolut.view.ui.viewHolder.RatesViewHolder
 import com.skydoves.baserecyclerviewadapter.BaseAdapter
 import com.skydoves.baserecyclerviewadapter.SectionRow
 
-class RatesAdapter : BaseAdapter() {
+class RatesAdapter(private val ratesEventsListener: RatesEventsListener) : BaseAdapter() {
 
     init {
         addSection(ArrayList<Rate>())
@@ -15,7 +16,7 @@ class RatesAdapter : BaseAdapter() {
 
     override fun layout(sectionRow: SectionRow) = R.layout.item_rate
 
-    override fun viewHolder(layout: Int, view: View) = RatesViewHolder(view)
+    override fun viewHolder(layout: Int, view: View) = RatesViewHolder(view,ratesEventsListener)
 
     fun addRates(rates: List<Rate>) {
         val section = sections()[0]

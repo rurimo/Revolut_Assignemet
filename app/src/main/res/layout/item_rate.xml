@@ -48,7 +48,8 @@
         app:layout_constraintStart_toEndOf="@+id/currencyIcon"
         tools:text="EUROS" />
 
-    <com.google.android.material.textfield.TextInputEditText
+    <EditText
+        android:focusedByDefault="false"
         android:id="@+id/currencyValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

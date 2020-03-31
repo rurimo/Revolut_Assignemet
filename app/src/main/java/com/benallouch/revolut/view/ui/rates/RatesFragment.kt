@@ -15,6 +15,7 @@ import org.koin.android.viewmodel.ext.android.getViewModel
 
 class RatesFragment : ViewModelFragment() {
 
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -23,12 +24,10 @@ class RatesFragment : ViewModelFragment() {
         return binding<FragmentRatesBinding>(inflater, R.layout.fragment_rates, container)
             .apply {
                 viewModel = getViewModel<RatesFragmentViewModel>().apply {
-                    startCoroutineTimer {
-                        postRatesCurrency("EUR")
-                    }
+                    startCoroutineTimer { postRatesCurrency(Pair("EUR", 1.0)) }
                 }
                 lifecycleOwner = this@RatesFragment
-                adapter = RatesAdapter()
+                adapter = RatesAdapter(viewModel!!)
             }.root
     }
 

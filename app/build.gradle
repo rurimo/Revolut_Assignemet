@@ -63,6 +63,8 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
     testImplementation "androidx.arch.core:core-testing:$archCompomentVersion"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion"
+    implementation "androidx.core:core-ktx:$ktxVersion"
+
 
     // koin
     implementation "org.koin:koin-android:$koinVersion"

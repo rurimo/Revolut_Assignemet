@@ -7,10 +7,10 @@ fun String.resolveCurrencyTitle(): CharSequence {
     return this.capitalize()
 }
 
-fun Map<String, Double>.toRatesList(): List<Rate> {
+fun Map<String, Double>.toRatesList(currencyRate: Double): List<Rate> {
     return this.entries.map {
         val (k, v) = it
-        Rate(k, v)
+        Rate(k, v * currencyRate,false)
     }
 }
 

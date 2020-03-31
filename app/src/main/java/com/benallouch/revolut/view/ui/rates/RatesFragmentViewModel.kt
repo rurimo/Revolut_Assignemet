@@ -4,16 +4,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.switchMap
 import com.benallouch.revolut.dispatcher.DispatchViewModel
+import com.benallouch.revolut.extension.startCoroutineTimer
 import com.benallouch.revolut.models.entity.Rate
 import com.benallouch.revolut.repository.RatesRepository
-import kotlinx.coroutines.channels.ticker
 import timber.log.Timber
-import kotlin.coroutines.CoroutineContext
 
 class RatesFragmentViewModel constructor(private val ratesRepository: RatesRepository) :
-    DispatchViewModel() {
+    DispatchViewModel(), RatesEventsListener {
 
-    private val baseCurrencyLiveData: MutableLiveData<String> = MutableLiveData()
+    private val baseCurrencyLiveData: MutableLiveData<Pair<String, Double>> = MutableLiveData()
     val ratesListLiveData: LiveData<List<Rate>>
 
     val toastLiveData: MutableLiveData<String> = MutableLiveData()
@@ -21,12 +20,22 @@ class RatesFragmentViewModel constructor(private val ratesRepository: RatesRepos
     init {
         Timber.d("injection RatesActivityViewModel")
 
-        this.ratesListLiveData = baseCurrencyLiveData.switchMap { baseCurrency ->
+        this.ratesListLiveData = baseCurrencyLiveData.switchMap { baseCurrencyWithRate ->
             launchOnViewModelScope {
-               ratesRepository.loadRates(baseCurrency) { toastLiveData.postValue(it) }
+                ratesRepository.loadRates(baseCurrencyWithRate) { toastLiveData.postValue(it) }
             }
         }
     }
 
-    fun postRatesCurrency(baseCurrency: String) = baseCurrencyLiveData.postValue(baseCurrency)
+    fun postRatesCurrency(currencyWithRate: Pair<String, Double>) =
+        baseCurrencyLiveData.postValue(currencyWithRate)
+
+
+    override fun onAmountChanged(currencyWithRate: Pair<String, Double>) {
+        Timber.d("Currency %s is Amount is : %s", currencyWithRate.first, currencyWithRate.second)
+        startCoroutineTimer { postRatesCurrency(currencyWithRate) }
+    }
+
+    override fun onCurrencyClicked(rate: Rate) {
+    }
 }
