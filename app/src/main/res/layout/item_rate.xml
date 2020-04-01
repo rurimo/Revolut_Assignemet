@@ -48,19 +48,20 @@
         app:layout_constraintStart_toEndOf="@+id/currencyIcon"
         tools:text="EUROS" />
 
-    <com.google.android.material.textfield.TextInputEditText
+    <EditText
         android:id="@+id/currencyValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:backgroundTint="#191C1F"
         android:hint="0"
-        android:inputType="numberSigned"
+        android:inputType="numberDecimal"
         android:textAppearance="@style/Amount"
         app:layout_constraintBottom_toBottomOf="@+id/currencyIcon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/currencyIcon"
         tools:ignore="HardcodedText"
-        tools:text="1000" />
+        tools:text="10" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
