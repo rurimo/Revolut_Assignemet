@@ -7,8 +7,10 @@ import com.benallouch.revolut.view.base.BaseAdapter
 import com.benallouch.revolut.view.base.SectionRow
 import com.benallouch.revolut.view.ui.rates.RatesEventsListener
 import com.benallouch.revolut.view.ui.viewHolder.RatesViewHolder
+import timber.log.Timber
 
-class RatesAdapter(private val ratesEventsListener: RatesEventsListener) : BaseAdapter() {
+class RatesAdapter(private val ratesEventsListener: RatesEventsListener) : BaseAdapter(){
+
 
     init {
         addSection(ArrayList<Rate>())
@@ -24,4 +26,14 @@ class RatesAdapter(private val ratesEventsListener: RatesEventsListener) : BaseA
         notifyItemRangeChanged(0, section.size)
     }
 
+ /*   override fun onAmountChanged(currencyWithRate: Pair<String, Double>) {
+        Timber.d("onAmountChanged")
+        val section = sections()[0]
+        Timber.d("Rate" + (section[1] as Rate).currencyRate)
+
+        section.map { it as Rate }.filter { !it.isMainCurrency }
+            .forEach { it.currencyRate *= currencyWithRate.second }
+
+        notifyItemRangeChanged(1, section.size)
+    }*/
 }
