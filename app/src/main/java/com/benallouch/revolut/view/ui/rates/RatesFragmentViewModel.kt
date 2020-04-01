@@ -10,7 +10,7 @@ import com.benallouch.revolut.repository.RatesRepository
 import timber.log.Timber
 
 class RatesFragmentViewModel constructor(private val ratesRepository: RatesRepository) :
-    DispatchViewModel(),RatesEventsListener {
+    DispatchViewModel(), RatesEventsListener {
 
     private val baseCurrencyLiveData: MutableLiveData<Pair<String, Double>> = MutableLiveData()
     val ratesListLiveData: LiveData<List<Rate>>
@@ -31,11 +31,7 @@ class RatesFragmentViewModel constructor(private val ratesRepository: RatesRepos
         baseCurrencyLiveData.postValue(currencyWithRate)
 
     override fun onAmountChanged(currencyWithRate: Pair<String, Double>) {
-        Timber.d("Currency %s is Amount is : %s", currencyWithRate.first, currencyWithRate.second)
-        startCoroutineTimer { postRatesCurrency(currencyWithRate) }
-    }
-
-    override fun onCurrencyClicked(rate: Rate) {
+            startCoroutineTimer { postRatesCurrency(currencyWithRate) }
     }
 
 }

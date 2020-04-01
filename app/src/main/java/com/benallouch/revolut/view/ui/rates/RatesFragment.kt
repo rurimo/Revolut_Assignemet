@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.fragment_rates.*
 import org.koin.android.viewmodel.ext.android.getViewModel
 
 
-class RatesFragment : ViewModelFragment() {
+class RatesFragment : ViewModelFragment(), RatesFragmentCallBacks {
 
 
     override fun onCreateView(
@@ -27,7 +27,7 @@ class RatesFragment : ViewModelFragment() {
                     startCoroutineTimer { postRatesCurrency(Pair("EUR", 1.0)) }
                 }
                 lifecycleOwner = this@RatesFragment
-                adapter = RatesAdapter(viewModel!!)
+                adapter = RatesAdapter(viewModel!!,this@RatesFragment)
             }.root
     }
 
@@ -38,4 +38,9 @@ class RatesFragment : ViewModelFragment() {
     companion object {
         const val FRAGMENT_TAG = "RATES_FRAGMENT"
     }
+
+    override fun onCurrencyClicked() {
+        recyclerView_rates.smoothScrollToPosition(0)
+    }
+
 }
