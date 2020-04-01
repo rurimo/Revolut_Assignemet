@@ -3,17 +3,16 @@ package com.benallouch.revolut.view.ui.viewHolder
 import android.text.Editable
 import android.view.View
 import androidx.core.widget.doAfterTextChanged
-import com.benallouch.revolut.extension.cancelCoroutineTimer
 import com.benallouch.revolut.extension.resolveCurrencyRate
 import com.benallouch.revolut.extension.resolveCurrencyTitle
 import com.benallouch.revolut.models.entity.Rate
 import com.benallouch.revolut.view.base.BaseViewHolder
 import com.benallouch.revolut.view.ui.rates.AdapterCallBacks
-import com.benallouch.revolut.view.ui.rates.RatesEventsListener
 import com.benallouch.revolut.view.ui.rates.toCurrencyDrawable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.item_rate.view.*
+import timber.log.Timber
 
 class RatesViewHolder(
     val view: View,
@@ -39,7 +38,12 @@ class RatesViewHolder(
                 .load(rate.currencyCode.toCurrencyDrawable())
                 .apply(RequestOptions().circleCrop())
                 .into(currencyIcon)
-            currencyValue.setText(rate.currencyRate.resolveCurrencyRate())
+
+            if (!currencyValue.hasFocus())
+                currencyValue.setText(rate.currencyRate.resolveCurrencyRate())
+            else {
+                Timber.d("Ich bin hier" + rate.currencyCode)
+            }
 
         }
     }
@@ -48,7 +52,7 @@ class RatesViewHolder(
         when (view == view.currencyValue) {
             true -> {
                 if (rate.isMainCurrency) {
-                   // cancelCoroutineTimer()
+                    // cancelCoroutineTimer()
                     view.currencyValue.doAfterTextChanged { currencyValue ->
                         currencyValue?.let { handleMainCurrencyChange(it) }
                     }
@@ -59,22 +63,17 @@ class RatesViewHolder(
     }
 
     private fun handleMainCurrencyChange(currencyValue: Editable) {
-        if (currencyValue.toString().toDouble() != rate.currencyRate) {
+        val currencyValueDouble =
+            when (currencyValue.isEmpty()) {
+                true -> 0.0
+                false -> currencyValue.toString().toDouble()
+            }
+
+        if (currencyValueDouble != rate.currencyRate) {
             adapterCallBacks.onAdapterAmountChanged(
-                Pair(rate.currencyCode, currencyValue.toString().toDouble())
+                Pair(rate.currencyCode, currencyValueDouble)
             )
         }
     }
 }
 
-
-/*
-                       if (it.isEmpty()) {
-                           ratesEventsListener.onAmountChanged(
-                               Pair(rate.currencyCode, 0.0)
-                           )
-                       } else {
-                           ratesEventsListener.onAmountChanged(
-                               Pair(rate.currencyCode, it.toString().toDouble())
-                           )
-                       }*/
