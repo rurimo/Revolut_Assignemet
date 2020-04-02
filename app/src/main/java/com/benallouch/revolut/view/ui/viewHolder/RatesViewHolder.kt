@@ -12,7 +12,6 @@ import com.benallouch.revolut.view.ui.rates.toCurrencyDrawable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.item_rate.view.*
-import timber.log.Timber
 
 class RatesViewHolder(
     val view: View,
@@ -39,20 +38,17 @@ class RatesViewHolder(
                 .apply(RequestOptions().circleCrop())
                 .into(currencyIcon)
 
+            //NO need to update the editable view that has the focus
             if (!currencyValue.hasFocus())
                 currencyValue.setText(rate.currencyRate.resolveCurrencyRate())
-            else {
-                Timber.d("Ich bin hier" + rate.currencyCode)
-            }
-
         }
     }
 
     override fun onClick(view: View) {
         when (view == view.currencyValue) {
             true -> {
-                if (rate.isMainCurrency) {
-                    // cancelCoroutineTimer()
+                //We want to dispatch the changes only when changing the first item in the list (maincurrency)
+                if (layoutPosition == 0) {
                     view.currencyValue.doAfterTextChanged { currencyValue ->
                         currencyValue?.let { handleMainCurrencyChange(it) }
                     }
@@ -70,9 +66,8 @@ class RatesViewHolder(
             }
 
         if (currencyValueDouble != rate.currencyRate) {
-            adapterCallBacks.onAdapterAmountChanged(
-                Pair(rate.currencyCode, currencyValueDouble)
-            )
+            val updatedRate = Rate(rate.currencyCode, currencyValueDouble, rate.isMainCurrency)
+            adapterCallBacks.onAdapterAmountChanged(updatedRate)
         }
     }
 }

@@ -8,13 +8,13 @@ import com.benallouch.revolut.R
 import com.benallouch.revolut.databinding.FragmentRatesBinding
 import com.benallouch.revolut.dispatcher.ViewModelFragment
 import com.benallouch.revolut.extension.startCoroutineTimer
+import com.benallouch.revolut.models.entity.Rate
 import com.benallouch.revolut.view.adapter.RatesAdapter
 import kotlinx.android.synthetic.main.fragment_rates.*
 import org.koin.android.viewmodel.ext.android.getViewModel
 
 
 class RatesFragment : ViewModelFragment(), RatesFragmentCallBacks {
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -24,10 +24,10 @@ class RatesFragment : ViewModelFragment(), RatesFragmentCallBacks {
         return binding<FragmentRatesBinding>(inflater, R.layout.fragment_rates, container)
             .apply {
                 viewModel = getViewModel<RatesFragmentViewModel>().apply {
-                    startCoroutineTimer { postRatesCurrency(Pair("EUR", 1.0)) }
+                    startCoroutineTimer { postRatesCurrency(Rate("EUR", 1.0, true)) }
                 }
                 lifecycleOwner = this@RatesFragment
-                adapter = RatesAdapter(viewModel!!,this@RatesFragment)
+                adapter = RatesAdapter(viewModel!!, this@RatesFragment)
             }.root
     }
 
