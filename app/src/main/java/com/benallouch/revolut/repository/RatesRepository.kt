@@ -16,16 +16,22 @@ class RatesRepository constructor(private val ratesClient: RatesClient) {
         Timber.d("Injection RatesRepository")
     }
 
-    suspend fun loadRates(currencyWithRate: Pair<String,Double>,  error: (String) -> Unit) =
+    suspend fun loadRates(currencyWithRate: Rate, error: (String) -> Unit) =
         withContext(Dispatchers.IO) {
             val liveData = MutableLiveData<List<Rate>>()
             var rates = arrayListOf<Rate>()
-            ratesClient.getLatestRates(currencyWithRate.first) { response ->
+            ratesClient.getLatestRates(currencyWithRate.currencyCode) { response ->
                 when (response) {
                     is ApiResponse.Success -> {
                         response.data?.let { data ->
-                            rates.add(Rate(currencyWithRate.first, currencyWithRate.second,true))
-                            rates.addAll(data.rates.toRatesList(currencyWithRate.second) as ArrayList<Rate>)
+                            rates.add(
+                                Rate(
+                                    currencyWithRate.currencyCode,
+                                    currencyWithRate.currencyRate,
+                                    true
+                                )
+                            )
+                            rates.addAll(data.rates.toRatesList(currencyWithRate.currencyRate) as ArrayList<Rate>)
                             liveData.postValue(rates)
                         }
                     }
