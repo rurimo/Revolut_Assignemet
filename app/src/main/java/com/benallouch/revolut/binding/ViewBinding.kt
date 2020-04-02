@@ -11,3 +11,11 @@ fun bindToast(view: View, text: LiveData<String>) {
         Toast.makeText(view.context, it, Toast.LENGTH_SHORT).show()
     }
 }
+
+@BindingAdapter("visibilityByResource")
+fun bindVisibilityByResource(view: View, list: List<Any>?) {
+    when (list) {
+        null -> view.visibility = View.VISIBLE
+        else -> view.visibility = View.GONE
+    }
+}
