@@ -54,7 +54,7 @@ class RatesViewHolder(
                     }
                 }
             }
-            false -> adapterCallBacks.onCurrencyClicked(rate)
+            false -> adapterCallBacks.onCurrencyClicked(layoutPosition,rate)
         }
     }
 

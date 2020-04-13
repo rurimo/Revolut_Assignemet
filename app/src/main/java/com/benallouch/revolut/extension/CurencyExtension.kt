@@ -1,7 +1,9 @@
 package com.benallouch.revolut.extension
 
 import com.benallouch.revolut.models.entity.Rate
-import java.text.DecimalFormat
+import java.math.BigDecimal
+import java.math.RoundingMode
+import java.text.NumberFormat
 import java.util.*
 
 
@@ -17,7 +19,10 @@ fun Map<String, Double>.toRatesList(currencyRate: Double): List<Rate> {
 }
 
 fun Double.resolveCurrencyRate(): String {
-    return DecimalFormat("##.##").format(this)
+    val modelVal = BigDecimal(this)
+    val displayVal: BigDecimal = modelVal.setScale(2, RoundingMode.HALF_EVEN)
+    val priceFormat: NumberFormat = NumberFormat.getCurrencyInstance(Locale.GERMANY)
+    return priceFormat.format(displayVal.toDouble()).toString()
 }
 
 

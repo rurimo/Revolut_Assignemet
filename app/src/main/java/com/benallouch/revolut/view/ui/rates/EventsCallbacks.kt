@@ -15,10 +15,13 @@ interface ViewModelCallbacks {
 //The viewHolder informs the adapter using these callbacks
 interface AdapterCallBacks {
     fun onAdapterAmountChanged(currencyWithRate: Rate)
-    fun onCurrencyClicked(rate: Rate)
+    fun onCurrencyClicked(fromPosition: Int, rate: Rate)
 
 }
+
 //The adapter informs the fragment using this callbacks in order to scroll the view to the top
 interface RatesFragmentCallBacks {
     fun onCurrencyClicked()
+    fun onAdapterItemMoved(function: () -> Unit)
+    fun scrollToPosition(position: Int)
 }

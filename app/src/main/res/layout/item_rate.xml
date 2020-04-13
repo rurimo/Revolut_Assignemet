@@ -54,6 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:backgroundTint="#191C1F"
+        android:maxLength="5"
         android:hint="0"
         android:inputType="numberDecimal"
         android:textAppearance="@style/Amount"

@@ -1,5 +1,6 @@
 package com.benallouch.revolut.view.ui.rates
 
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.switchMap
@@ -34,4 +35,6 @@ class RatesFragmentViewModel constructor(private val ratesRepository: RatesRepos
         startCoroutineTimer { postRatesCurrency(currencyWithRate) }
     }
 
+    fun unsubscribe(owner: LifecycleOwner) =
+        baseCurrencyLiveData.removeObservers(owner)
 }
